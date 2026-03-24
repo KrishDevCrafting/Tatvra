@@ -3,8 +3,8 @@ const db = require("../Config/db");
 // Create User (NO hashing)
 const createUser = async ({  email, password,  }) => {
   const query = `
-    INSERT INTO users ( email, password,)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO users ( email, password)
+    VALUES (?, ?)
   `;
 
   return new Promise((resolve, reject) => {
@@ -18,6 +18,16 @@ const createUser = async ({  email, password,  }) => {
     );
   });
 };
+
+
+
+
+
+
+
+
+
+
 
 // Find user by email
 const findUserByEmail = (email) => {

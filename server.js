@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 // 👇 Login
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-
+  
   db.query(
     "SELECT * FROM users WHERE email = ?",
     [email],
@@ -40,6 +40,5 @@ app.get("/users", (req, res) => {
     if (err) return res.status(500).send(err);
     res.json(result);
   });
-});
-
+}); 
 app.listen(3000, () => console.log("Server running 🚀"));
