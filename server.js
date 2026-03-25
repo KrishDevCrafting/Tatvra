@@ -9,30 +9,8 @@ app.get("/", (req, res) => {
   res.send("Hello Server 🚀");
 });
 
-// 👇 Login
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  
-  db.query(
-    "SELECT * FROM users WHERE email = ?",
-    [email],
-    (err, result) => {
-      if (err) return res.status(500).send(err);
-
-      if (result.length === 0) {
-        return res.status(400).json({ message: "User not found" });
-      }
-
-      const user = result[0];
-
-      if (user.password !== password) {
-        return res.status(400).json({ message: "Wrong password" });
-      }
-
-      res.json({ message: "Login successful ✅" });
-    }
-  );
-});
+// 👇 Routes
+app.use('/auth', require('./Routes/auth'));
 
 // 👇 Get users
 app.get("/users", (req, res) => {

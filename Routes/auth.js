@@ -1,16 +1,17 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const db = require("../db");
+const { register, login, logout, deleteUser } = require('../Controllers/authController');
 
+// POST /auth/register  → user banao
+router.post('/register', register);
 
+// POST /auth/login     → login karo
+router.post('/login', login);
 
+// POST /auth/logout    → logout karo
+router.post('/logout', logout);
 
-router.post("/login", (req, res) => {
-  // same code here
-});
-
-router.post("/register",(req,res)=>{
-
-})
+// DELETE /auth/delete/:id → user hatao
+router.delete('/delete/:id', deleteUser);
 
 module.exports = router;
