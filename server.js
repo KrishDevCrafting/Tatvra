@@ -1,6 +1,6 @@
-const express = require('express');
-const db = require('./Config/db');
+const express = require("express");
 const app = express();
+const db = require("./Config/db");
 
 app.use(express.json());
 
@@ -9,14 +9,8 @@ app.get("/", (req, res) => {
   res.send("Hello Server 🚀");
 });
 
-// 👇 Routes
-app.use('/auth', require('./Routes/auth'));
+// 👇 Routes — har ek alag hoti hai!
+app.use("/auth", require("./Routes/auth"));
+app.use("/users", require("./Routes/users"));
 
-// 👇 Get users
-app.get("/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.json(result);
-  });
-}); 
-app.listen(3000, () => console.log("Server running 🚀"));
+app.listen(3000, () => console.log("Server running on port 3000 🚀"));
