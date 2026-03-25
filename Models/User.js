@@ -19,16 +19,6 @@ const createUser = async ({  email, password,  }) => {
   });
 };
 
-
-
-
-
-
-
-
-
-
-
 // Find user by email
 const findUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
