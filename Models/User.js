@@ -1,45 +1,46 @@
-const db = require("../Config/db");
+const db = require('../Config/db');
 
-// Create User (NO hashing)
-const createUser = async ({  email, password,  }) => {
-  const query = `
-    INSERT INTO users ( email, password)
-    VALUES (?, ?)
-  `;
+const User = {
+  create: async (name, email, hashedPassword) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+        [name, email, hashedPassword],
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
 
-  return new Promise((resolve, reject) => {
-    db.query(
-      query,
-      [ email, password],
-      (err, result) => {
+  findByEmail: async (email) => {
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+        if (err) return reject(err);
+        resolve(result.length > 0 ? result[0] : null);
+      });
+    });
+  },
+
+  findAll: async () => {
+    return new Promise((resolve, reject) => {
+      // Passwords hide kiye hain query mein security ke liye 🛡️
+      db.query("SELECT id, name, email FROM users", (err, result) => {
         if (err) return reject(err);
         resolve(result);
-      }
-    );
-  });
-};
+      });
+    });
+  },
 
-// Find user by email
-const findUserByEmail = (email) => {
-  return new Promise((resolve, reject) => {
-    db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-      (err, result) => {
+  deleteById: async (id) => {
+    return new Promise((resolve, reject) => {
+      db.query("DELETE FROM users WHERE id = ?", [id], (err, result) => {
         if (err) return reject(err);
-        resolve(result[0]);
-      }
-    );
-  });
+        resolve(result);
+      });
+    });
+  }
 };
 
-// Compare password (simple compare)
-const comparePassword = async (inputPassword, storedPassword) => {
-  return inputPassword === storedPassword;
-};
-
-module.exports = {
-  createUser,
-  findUserByEmail,
-  comparePassword,
-};
+module.exports = User;
