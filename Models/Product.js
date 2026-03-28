@@ -1,4 +1,4 @@
-const db = require('../Config/db');
+const db = require("../Config/db");
 
 const Product = {
   create: async (name, description, price, sku, category) => {
@@ -10,15 +10,26 @@ const Product = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
   },
 
   findAll: async () => {
-    // Sabhi products nikal kar dega dukan (database) se
     return new Promise((resolve, reject) => {
-      db.query("SELECT * FROM products ORDER BY created_at DESC", (err, result) => {
+      db.query(
+        "SELECT * FROM products ORDER BY created_at DESC",
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  },
+
+  deleteById: async (id) => {
+    return new Promise((resolve, reject) => {
+      db.query("DELETE FROM products WHERE id = ?", [id], (err, result) => {
         if (err) return reject(err);
         resolve(result);
       });
