@@ -22,7 +22,7 @@ const Product = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
   },
@@ -33,6 +33,20 @@ const Product = {
         if (err) return reject(err);
         resolve(result);
       });
+    });
+  },
+
+  // Update Price
+  UpdatePrice: async (id, newprice) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "UPDATE products SET price =? WHERE id=?",
+        [newprice, id],
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        },
+      );
     });
   }
 };
