@@ -10,7 +10,7 @@ const Cart = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
   },
@@ -24,7 +24,7 @@ const Cart = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
   },
@@ -38,7 +38,7 @@ const Cart = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
   },
@@ -52,10 +52,24 @@ const Cart = {
         (err, result) => {
           if (err) return reject(err);
           resolve(result);
-        }
+        },
       );
     });
-  }
+  },
+
+  // DELETE CART - Checkout ke baad poora cart clear karna
+  clearCart: async (user_id) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "DELETE FROM cart_items WHERE user_id = ?",
+        [user_id],
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        },
+      );
+    });
+  },
 };
 
 module.exports = Cart;
