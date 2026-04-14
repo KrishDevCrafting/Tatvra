@@ -27,6 +27,21 @@ const Orders = {
       );
     });
   },
+
+  // #GetOrderById
+
+  getOrderById: async (order_id, user_id) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT o.*,oi.product_id,oi.quantity,oi.price,oi.size,oi.color FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE o.id = ? AND o.user_id = ?",
+        [order_id, user_id],
+        (err, result) => {
+          if (err) return reject(err);
+          else resolve(result);
+        },
+      );
+    });
+  },
 };
 
 module.exports = Orders;
