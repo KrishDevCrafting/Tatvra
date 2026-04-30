@@ -42,6 +42,21 @@ const Orders = {
       );
     });
   },
+
+  addOrderItems: async (order_id, product_id, quantity, price, size, color) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "INSERT INTO order_items(order_id,product_id,quantity,price,size,color)VALUES(?,?,?,?,?,?)",
+        [order_id, product_id, quantity, price, size, color],
+        (err, result) => {
+          if (err) return reject(err);
+          else resolve(result);
+        },
+      );
+    });
+  },
 };
+
+// AddOrderItems
 
 module.exports = Orders;
